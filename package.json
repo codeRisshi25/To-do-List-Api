@@ -1,0 +1,25 @@
+{
+  "name": "to-do-list-api",
+  "version": "1.0.0",
+  "description": "a simple to-do list api built on nodejs ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeRisshi25/To-do-list-api-.git"
+  },
+  "author": "codeRisshi25",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeRisshi25/To-do-list-api-/issues"
+  },
+  "homepage": "https://github.com/codeRisshi25/To-do-list-api-#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  }
+}
