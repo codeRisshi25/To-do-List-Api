@@ -1,10 +1,14 @@
 // models/Task.js
 import { DataTypes } from '@sequelize/core';
 import db from '../config/sequelizeConfig.js';
-import users from './Users.js'; // Import User model for association
+import User from './User.js'; // Import User model for association
 
-// Define the Task model
-const Task = db.define('Task', {
+const Task = db.define('tasks', {
+  tid : {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncremet: true
+  },
   title: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -17,11 +21,11 @@ const Task = db.define('Task', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  userId: {
+  uid: {
     type: DataTypes.INTEGER,
     references: {
-      model: users, // Reference the User model
-      key: 'id',
+      model: User, // Reference the User model
+      key: 'uid',
     },
   },
   createdAt: {
@@ -30,8 +34,8 @@ const Task = db.define('Task', {
   },
 });
 
-users.hasMany(Task, { foreignKey: 'userId' });
-Task.belongsTo(users, { foreignKey: 'userId' });
+User.hasMany(Task, { foreignKey: 'uid' });
+Task.belongsTo(User, { foreignKey: 'uid' });
 
 
 module.exports = Task;
