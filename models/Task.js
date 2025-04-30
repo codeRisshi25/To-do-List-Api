@@ -1,6 +1,6 @@
 // models/Task.js
-import { DataTypes } from '@sequelize/core';
-import db from '../config/sequelizeConfig.js';
+import { DataTypes } from 'sequelize';
+import {db} from '../config/sequelizeConfig.js';
 import User from './User.js'; // Import User model for association
 
 const Task = db.define('tasks', {
@@ -37,5 +37,4 @@ const Task = db.define('tasks', {
 User.hasMany(Task, { foreignKey: 'uid' });
 Task.belongsTo(User, { foreignKey: 'uid' });
 
-
-module.exports = Task;
+export default Task;
