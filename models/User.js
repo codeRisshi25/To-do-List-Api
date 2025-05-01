@@ -24,6 +24,10 @@ const User = db.define('users', {
       this.setDataValue('password',hash);
     }
   },
+  logginIn: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
