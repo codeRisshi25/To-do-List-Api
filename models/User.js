@@ -24,7 +24,7 @@ const User = db.define('users', {
       this.setDataValue('password',hash);
     }
   },
-  logginIn: {
+  loggedin: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
   },
@@ -37,5 +37,8 @@ const User = db.define('users', {
 User.prototype.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
-
+User.checkIfExists = async function (username) {
+  const existingUser = await this.findOne({ where: { username } });
+  return !!existingUser; // Return true if user exists, false otherwise
+};
 export default User;
