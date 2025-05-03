@@ -1,4 +1,7 @@
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 const getData = (reqBody, isLogout = false) => {
   if (!reqBody || !reqBody.username || (!isLogout && !reqBody.password)) {
@@ -48,6 +51,7 @@ const signupController = async (req, res) => {
 
 // Login
 const loginController = async (req, res) => {
+  // Authenticate the User
   try {
     const { username, password, error } = getData(req.body);
     if (error) {
@@ -64,7 +68,12 @@ const loginController = async (req, res) => {
         .status(401)
         .json({ success: false, error: "Invalid password" });
     }
-
+    // sign the jwts
+    const payload = {
+      uid: user.uid,
+      username: user.username,
+    };
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
     // if password is correct log the user in by changing loggedin field to true
     user.loggedin = true;
     try {
@@ -76,7 +85,14 @@ const loginController = async (req, res) => {
         .json({ success: false, error: "Failed to update user status" });
     }
     console.log(`${user.username} logged in successfully`);
-    return res.status(200).json({ success: true, message: "login successful" });
+
+    return res
+      .status(200)
+      .json({
+        success: true,
+        message: "login successful",
+        accessToken: accessToken,
+      });
   } catch (err) {
     console.log("Error during login:", err);
     return res
@@ -87,7 +103,7 @@ const loginController = async (req, res) => {
 
 const logoutController = async (req, res) => {
   try {
-    const { username, error } = getData(req.body,true);
+    const { username, error } = getData(req.body, true);
     if (error) {
       return res.status(400).json({ success: false, error });
     }
