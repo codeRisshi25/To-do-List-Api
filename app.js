@@ -17,8 +17,8 @@ app.use(express.json());
 app.use('/',login);
 app.use('/',signup);
 app.use('/',logout);
-app.use('/user/',getTasks);
-app.use('/user/',addTasks);
+app.use('/user',getTasks);
+app.use('/user',addTasks);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });

@@ -7,7 +7,7 @@ const Task = db.define("tasks", {
   tid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncremet: true,
+    autoIncrement: true,
   },
   title: {
     type: DataTypes.STRING,
