@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { db , testConnection } from "./config/sequelizeConfig.js";
 import { login, signup , logout } from "./routes/authRoutes.js";
-import { getTasks } from './routes/taskRoutes.js'
+import { getTasks, addTasks } from './routes/taskRoutes.js'
 
 dotenv.config();
 const PORT = process.env.PORT || 7000;
@@ -17,7 +17,8 @@ app.use(express.json());
 app.use('/',login);
 app.use('/',signup);
 app.use('/',logout);
-app.use('/',getTasks);
+app.use('/user/',getTasks);
+app.use('/user/',addTasks);
 
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy" });

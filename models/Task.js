@@ -1,13 +1,13 @@
 // models/Task.js
-import { DataTypes } from 'sequelize';
-import {db} from '../config/sequelizeConfig.js';
-import User from './User.js'; // Import User model for association
+import { DataTypes } from "sequelize";
+import { db } from "../config/sequelizeConfig.js";
+import User from "./User.js"; // Import User model for association
 
-const Task = db.define('tasks', {
-  tid : {
+const Task = db.define("tasks", {
+  tid: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncremet: true
+    autoIncremet: true,
   },
   title: {
     type: DataTypes.STRING,
@@ -24,9 +24,11 @@ const Task = db.define('tasks', {
   uid: {
     type: DataTypes.INTEGER,
     references: {
-      model: User, // Reference the User model
-      key: 'uid',
+      model: User,
+      key: "uid",
     },
+    onDelete: "CASCADE", // or 'SET NULL' or 'RESTRICT'
+    onUpdate: "CASCADE",
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -34,7 +36,7 @@ const Task = db.define('tasks', {
   },
 });
 
-User.hasMany(Task, { foreignKey: 'uid' });
-Task.belongsTo(User, { foreignKey: 'uid' });
+User.hasMany(Task, { foreignKey: "uid" });
+Task.belongsTo(User, { foreignKey: "uid" });
 
 export default Task;

@@ -49,7 +49,7 @@ const signupController = async (req, res) => {
   }
 };
 
-// Login
+// Login logic | jwt access and refresh token logic here
 const loginController = async (req, res) => {
   // Authenticate the User
   try {
@@ -73,7 +73,10 @@ const loginController = async (req, res) => {
       uid: user.uid,
       username: user.username,
     };
-    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET,{
+      expiresIn:process.env.JWT_EXPIRATION_TIME // increase to 20mins or more when prod
+    });
+    const refershToken = jwt.sign(payload,process.env.REFRESH_TOKEN_SECRET)
     // if password is correct log the user in by changing loggedin field to true
     user.loggedin = true;
     try {
