@@ -63,6 +63,14 @@ const loginController = async (req, res) => {
         .status(409)
         .json({ success: false, error: "User does not exist" });
     }
+    if (user.loggedin== true ){
+      return res
+      .status(200)
+      .json({
+        success: true,
+        message: "Already logged in",
+      });
+    }
     if (!user.validatePassword(password)) {
       return res
         .status(401)
