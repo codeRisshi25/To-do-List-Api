@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { db , testConnection } from "./config/sequelizeConfig.js";
-import { login, signup , logout , getTasks } from "./routes/authRoutes.js";
+import { login, signup , logout } from "./routes/authRoutes.js";
+import { getTasks } from './routes/taskRoutes.js'
 
 dotenv.config();
 const PORT = process.env.PORT || 7000;
