@@ -60,6 +60,7 @@ A RESTful API for managing tasks and user authentication, built with Node.js, Ex
 | `GET` | `/tasks/get` | Get all tasks for authenticated user |
 | `POST` | `/tasks/add` | Create a new task |
 | `PATCH` | `/tasks/:tid/status` | Update task completion status |
+| `DELETE` | `/tasks/:tid/delete` |	Delete a task |
 
 ## Getting Started
 
@@ -83,7 +84,7 @@ cp .env.example .env
 # Edit .env with your database credentials and JWT secrets
 
 # Initialize the database
-npx sequelize-cli db:migrate
+node config/syncData.js
 
 # Start the server
 npm start
