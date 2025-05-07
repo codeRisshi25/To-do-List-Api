@@ -39,4 +39,6 @@ const Task = db.define("tasks", {
 User.hasMany(Task, { foreignKey: "uid" });
 Task.belongsTo(User, { foreignKey: "uid" });
 
+await Task.sync()
+
 export default Task;

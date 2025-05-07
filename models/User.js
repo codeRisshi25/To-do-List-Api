@@ -41,4 +41,7 @@ User.checkIfExists = async function (username) {
   const existingUser = await this.findOne({ where: { username } });
   return !!existingUser; // Return true if user exists, false otherwise
 };
+
+await User.sync();
+
 export default User;
