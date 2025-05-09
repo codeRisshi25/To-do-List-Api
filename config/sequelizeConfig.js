@@ -5,12 +5,21 @@ dotenv.config();
 
 export const db = new Sequelize({
     dialect: "postgres",
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DB_NAME,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    host: process.env.SUPABASE_DB_HOST ,
+    port: process.env.SUPABASEDB_PORT,
+    database: process.env.SUPABASE_DB_NAME,
+    username: process.env.SUPABASE_DB_USER,
+    password: process.env.SUPABASE_DB_PASSWORD,
     logging:false,
+    dialectOptions : {
+        ssl : {
+            require: true,
+            rejectUnauthorized: false
+        }
+    },
+    statement_timeout: 10000, // 10s timeout for long-running queries
+    query_timeout: 10000,     // 10s timeout for long-running queries
+    idle_in_transaction_session_timeout: 10000 
 });
 
 export const testConnection = async () => {

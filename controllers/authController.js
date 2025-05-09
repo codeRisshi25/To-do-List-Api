@@ -63,10 +63,8 @@ const loginController = async (req, res) => {
         .status(409)
         .json({ success: false, error: "User does not exist" });
     }
-    if (user.loggedin== true ){
-      return res
-      .status(200)
-      .json({
+    if (user.loggedin == true) {
+      return res.status(200).json({
         success: true,
         message: "Already logged in",
       });
@@ -81,10 +79,14 @@ const loginController = async (req, res) => {
       uid: user.uid,
       username: user.username,
     };
-    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET,
-       // increase to 20mins or more when prod
+    const accessToken = jwt.sign(
+      payload,
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "8h",
+      } // increase to 20mins or more when prod
     );
-    const refershToken = jwt.sign(payload,process.env.REFRESH_TOKEN_SECRET)
+    const refershToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
     // if password is correct log the user in by changing loggedin field to true
     user.loggedin = true;
     try {
@@ -97,12 +99,18 @@ const loginController = async (req, res) => {
     }
     console.log(`${user.username} logged in successfully`);
 
+    // Set HTTP-only cookie with the access token
     return res
+      .cookie("access_token", accessToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "Lax",
+        maxAge: 8 * 60 * 60 * 1000,
+      })
       .status(200)
       .json({
         success: true,
         message: "login successful",
-        accessToken: accessToken,
       });
   } catch (err) {
     console.log("Error during login:", err);
@@ -141,6 +149,7 @@ const logoutController = async (req, res) => {
     }
     console.log(`${user.username} logged out successfully`);
     return res
+      .clearCookie("access_token")
       .status(200)
       .json({ success: true, message: "logout successful" });
   } catch (err) {
